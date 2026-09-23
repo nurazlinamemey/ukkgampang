@@ -1,69 +1,79 @@
-import Image from "next/image";
+  "use client";
+  import Link from "next/link";
+  import { Leaf, LogIn, UserPlus, Recycle, TrendingUp, Gift, ShieldCheck, Sparkles } from "lucide-react";
+  import "./globals.css";
+  import { dashboardApi } from "@/lib/api-client";
+  import { getErrorMessage } from "@/lib/utils";
 
-export default function Home() {
-  return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+
+  export default function LandingPage() {
+    return (
+      <div className="min-h-screen soft-green-bg flex flex-col justify-center items-center p-6">
+        <div className="w-full max-w-md bg-white rounded-3xl overflow-hidden"
+          style={{ boxShadow: "0 20px 60px rgba(74, 222, 128, 0.2)" }}>
+
+          {/* Header Hijau Soft */}
+          <div className="soft-green-gradient pt-12 pb-20 px-6 text-center text-white relative overflow-hidden">
+            {/* Dekorasi Lingkaran */}
+            <div className="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full" />
+            <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-white/10 rounded-full" />
+
+            <div className="relative z-10">
+              <div className="flex justify-center mb-4">
+                <div className="bg-white/25 p-4 rounded-full backdrop-blur-sm"
+                  style={{ boxShadow: "0 8px 20px rgba(0,0,0,0.1)" }}>
+                  <Leaf size={48} className="text-white" />
+                </div>
+              </div>
+              <h1 className="text-3xl font-bold mb-2">Bank Sampah</h1>
+              <p className="text-green-50 text-sm opacity-90">Ubah Sampahmu Jadi Poin & Rupiah</p>
+            </div>
+
+            <div className="absolute bottom-0 left-0 right-0 h-8 bg-white rounded-t-[40px]" />
+          </div>
+
+          {/* Body */}
+          <div className="px-6 pb-8 -mt-8 relative z-10">
+
+            {/* Fitur Unggulan */}
+            <div className="grid grid-cols-3 gap-2 mb-8 text-center">
+              {[
+                { icon: Recycle, label: "Setor Sampah" },
+                { icon: TrendingUp, label: "Dapat Poin" },
+                { icon: Gift, label: "Tukar Hadiah" },
+              ].map((f, i) => (
+                <div key={i} className="flex flex-col items-center">
+                  <div className="bg-green-100 p-2.5 rounded-full mb-2">
+                    <f.icon size={18} className="text-green-600" />
+                  </div>
+                  <span className="text-[10px] text-gray-600 font-medium">{f.label}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Tombol Aksi */}
+            <div className="space-y-3">
+              <Link href="/login"
+                className="w-full flex items-center justify-center gap-2 py-3.5 soft-button">
+                <LogIn size={20} /> Masuk (Login)
+              </Link>
+              <Link href="/register-nasabah"
+                className="w-full flex items-center justify-center gap-2 py-3.5 bg-white border-2 border-green-400 text-green-700 hover:bg-green-50 font-bold rounded-xl transition active:scale-95">
+                <UserPlus size={20} /> Daftar Nasabah
+              </Link>
+              <Link href="/register-admin"
+                className="w-full flex items-center justify-center gap-2 py-3.5 bg-white border-2 border-gray-200 text-gray-600 hover:bg-gray-50 font-bold rounded-xl transition active:scale-95">
+                <ShieldCheck size={20} /> Daftar Admin Bank Sampah
+              </Link>
+            </div>
+
+            {/* Footer */}
+            <div className="flex items-center justify-center gap-1 mt-6">
+              <Sparkles size={12} className="text-green-400" />
+              <p className="text-center text-xs text-gray-400">© 2024 Bank Sampah Digital</p>
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
-}
+      </div>
+    );
+  }
